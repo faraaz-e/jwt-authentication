@@ -1,2 +1,2 @@
-### jwt-authenication
+### jwt-authentication
 
