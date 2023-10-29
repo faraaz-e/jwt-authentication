@@ -2,6 +2,11 @@ GET http://localhost:3000/users
 
 ###
 
+GET http://localhost:3000/posts
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVG9tIiwiaWF0IjoxNjk4NTAwNzYzfQ.-7s0F6p5zRq07FbXF-7CZkeRzfaTrgYfqlnBKTqDTlg
+
+###
+
 POST http://localhost:3000/users
 Content-Type: application/json
 
