@@ -1,6 +1,8 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 app.use(express.json());
 
@@ -17,12 +19,9 @@ const posts = [
   },
 ];
 
-app.get("/posts", (req, res) => {
-  res.json(posts);
-});
-
-app.get("/login", (req, res) => {
-  //Authenticate User
+app.get("/posts", authenticateToken, (req, res) => {
+  console.log(res);
+  res.json(posts.filter((post) => post.username === req.user.name));
 });
 
 //fetch registered users
@@ -31,41 +30,17 @@ app.get("/users", (req, res) => {
   res.json(users);
 });
 
-//registering a user
+function authenticateToken(req, res, next) {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
 
-app.post("/users", async (req, res) => {
-  try {
-    const salt = await bcrypt.genSalt();
-    const hashedPassword = await bcrypt.hash(req.body.password, salt);
-    console.log(salt);
-    console.log(hashedPassword);
+  if (token == null) return res.sendStatus(401);
 
-    const user = { name: req.body.name, password: hashedPassword };
-    users.push(user);
-    res.status(201).send();
-  } catch {
-    res.status(500).send();
-  }
-});
-
-app.post("/users/login", async (req, res) => {
-  const user = users.find((user) => (user.name = req.body.name));
-  if (user == null) {
-    return res.status(400).send("User not found");
-  }
-  try {
-    const isPswdCorrect = await bcrypt.compare(
-      req.body.password,
-      user.password
-    );
-    if (isPswdCorrect) {
-      res.send("Success");
-    } else {
-      res.send("Incorrect Credentials");
-    }
-  } catch {
-    res.status(500).send();
-  }
-});
+  jwt.verify(token, process.env.SECRET_ACCESS_TOKEN, (err, user) => {
+    if (err) return res.sendStatus(403);
+    req.user = user;
+    next();
+  });
+}
 
 app.listen(3000);
