@@ -2,12 +2,30 @@ GET http://localhost:3000/users
 
 ###
 
+DELETE http://localhost:4000/logout
+Content-Type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVG9tIiwicGFzc3dvcmQiOiIkMmIkMTAkeFFrcnVNdDRGdE1FTVJUUXBKN2lmLlloaktabTdsNllUdGNTWXdJQTRuMnRmanlzV01IdHkiLCJpYXQiOjE2OTg2NTI2MDd9.cdjKxv-Txn2t8l_tF3kazKGrSd-D5xY39-5FI9LIcHQ"
+}
+
+###
+
 GET http://localhost:3000/posts
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVG9tIiwiaWF0IjoxNjk4NTAwNzYzfQ.-7s0F6p5zRq07FbXF-7CZkeRzfaTrgYfqlnBKTqDTlg
 
 ###
 
-POST http://localhost:3000/users
+POST http://localhost:4000/token
+Content-Type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVG9tIiwicGFzc3dvcmQiOiIkMmIkMTAkeFFrcnVNdDRGdE1FTVJUUXBKN2lmLlloaktabTdsNllUdGNTWXdJQTRuMnRmanlzV01IdHkiLCJpYXQiOjE2OTg2NTI2MDd9.cdjKxv-Txn2t8l_tF3kazKGrSd-D5xY39-5FI9LIcHQ"
+}
+
+###
+
+POST http://localhost:4000/users
 Content-Type: application/json
 
 {
@@ -17,7 +35,7 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:3000/users/login
+POST http://localhost:4000/users/login
 Content-Type: application/json
 
 {
